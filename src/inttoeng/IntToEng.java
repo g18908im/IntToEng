@@ -58,7 +58,7 @@ public class IntToEng {
     	}
     	return m;
     }
-    static String translateEng1000(int n){//1000~999,999まで
+    static String translateEng1000(int n){//1,000~999,999
     	String m = "";
     	String t = "thousand";
     	if(n%1000 == 0){
@@ -72,7 +72,7 @@ public class IntToEng {
     	}
     	return m;
     }
-    static String translateEngM(int n){//1,000,000~2,147,483,647
+    static String translateEngM(int n){//1,000,000~999,999,999
     	String m = "";
     	String mi = "million";
     	if(n%1000000 == 0){
@@ -90,7 +90,7 @@ public class IntToEng {
     	} 	
     	return m;
     }
-    static String translateEngB(int n){
+    static String translateEngB(int n){//1,000,000,000~2,147,483,647
     	String m = "";
     	String b = "billion";
     	if(n%1000000000 == 0){
@@ -99,11 +99,6 @@ public class IntToEng {
     		}else{
     			m = translateEng100(n/1000000000) + " " + b;
     		}
-    		/*if(n/1000000000 < 100){
-    			m = translateEng(n/1000000000) + " " + b;
-    		}else{
-    			m = translateEng100(n/1000000000) + " " + b;
-    		}*/
     	}else{
     		if(n/1000000000 >= 100){
     			m = translateEng100(n/1000000000) + " " + b + translateEngM(n%1000000000);
