@@ -7,28 +7,31 @@ public class IntToEng {
 	 // メインメソッド
     public static void main(String[] args) {
 
-        Scanner sc = new Scanner(System.in);
-        //int input = sc.nextInt();
+        Scanner sc = new Scanner(System.in);       
         try{
         	int input = sc.nextInt();
-        	if(input<100){
-        		System.out.println(translateEng(input));
-        	}else if(input<1000){
-        		System.out.println(translateEng100(input));
-        	}else if(input<1000000){
-        		System.out.println(translateEng1000(input));
-        	}else if(input<1000000000){
-        		System.out.println(translateEngM(input));
-        	}else if(input<=2147483647){
-        		System.out.println(translateEngB(input));
-        	}
+        	System.out.println(translateEng(input));
         }catch(InputMismatchException e){
         	System.out.println("2,147,483,648以上は表示できません");
         }
     }
 
-    // 数値を英訳する変換するメソッド
     static String translateEng(int n) {//0~99
+    	String m = "";
+    	if(n<100){
+    		m = translateEng99(n);
+    	}else if(n<1000){
+    		m = translateEng100(n);
+    	}else if(n<1000000){
+    		m = translateEng1000(n);
+    	}else if(n<1000000000){
+    		m = translateEngM(n);
+    	}else if(n<=2147483647){
+    		m = translateEngB(n);
+    	}
+    	return m;
+    }
+    static String translateEng99(int n){
     	String m = "";
     	final String[] Number19 = {"zero", "one", "two", "three", "four",
 				"five", "six", "seven", "eight", "nine",
@@ -52,9 +55,9 @@ public class IntToEng {
     	String m = "";
     	String h = "hundred";
     	if(n%100 == 0){
-    		m = translateEng(n/100) + " " + h;
+    		m = translateEng99(n/100) + " " + h;
     	}else{
-    		m = translateEng(n/100) + " " + h + " " + translateEng(n%100);
+    		m = translateEng99(n/100) + " " + h + " " + translateEng99(n%100);
     	}
     	return m;
     }
@@ -62,12 +65,16 @@ public class IntToEng {
     	String m = "";
     	String t = "thousand";
     	if(n%1000 == 0){
-    		m = translateEng(n/1000) + " " + t;
+    		if(n/1000 < 100){
+    			m = translateEng99(n/1000) + " " + t;
+    		}else{
+    			m = translateEng100(n/1000) + " " + t;
+    		}
     	}else{
     		if(n/1000 >= 100){
     			m = translateEng100(n/1000) + " " + t + " " + translateEng100(n%1000);
     		}else{
-    			m = translateEng(n/1000) + " " + t + " " + translateEng100(n%1000);
+    			m = translateEng99(n/1000) + " " + t + " " + translateEng100(n%1000);
     		}
     	}
     	return m;
@@ -77,7 +84,7 @@ public class IntToEng {
     	String mi = "million";
     	if(n%1000000 == 0){
     		if(n/1000000 < 100){
-    			m = translateEng(n/1000000) + " " + mi;
+    			m = translateEng99(n/1000000) + " " + mi;
     		}else{
     			m = translateEng100(n/1000000) + " " + mi;
     		}
@@ -85,7 +92,7 @@ public class IntToEng {
     		if(n/1000000 >= 100){
     			m = translateEng100(n/1000000) + " " + mi + " " + translateEng1000(n%1000000);
     		}else{
-    			m = translateEng(n/1000000) + " " + mi + " " + translateEng1000(n%1000000);
+    			m = translateEng99(n/1000000) + " " + mi + " " + translateEng1000(n%1000000);
     		}
     	} 	
     	return m;
@@ -95,15 +102,15 @@ public class IntToEng {
     	String b = "billion";
     	if(n%1000000000 == 0){
     		if(n/1000000000 < 100){
-    			m = translateEng(n/1000000000) + " " + b;
+    			m = translateEng99(n/1000000000) + " " + b;
     		}else{
     			m = translateEng100(n/1000000000) + " " + b;
     		}
     	}else{
     		if(n/1000000000 >= 100){
-    			m = translateEng100(n/1000000000) + " " + b + translateEngM(n%1000000000);
+    			m = translateEng100(n/1000000000) + " " + b + " " + translateEngM(n%1000000000);
     		}else{
-    			m = translateEng(n/1000000000) + " " + b + translateEngM(n%1000000000);
+    			m = translateEng99(n/1000000000) + " " + b + " " + translateEngM(n%1000000000);
     		}
     	}
     	return m;
